@@ -2,7 +2,11 @@ import './App.css';
 import { io } from 'socket.io-client';
 import React, { useState, useRef } from 'react';
 
-const socket = io(`https://codeshare-backendservice.herokuapp.com/`);
+// UNCOMMENT
+// const socket = io(`https://codeshare-backendservice.herokuapp.com/`);
+
+// COMMENT
+const socket = io(`http://localhost:3000`);
 
 function App() {
 
@@ -33,7 +37,7 @@ function App() {
 
   socket.on('userLeft', (message) => {
     newLine()
-    messagesFeed.current.innerHTML += `<span style="font-weight:bolder; color:red">"${message.username}" has left.</span>`
+    messagesFeed.current.innerHTML += `<span style="font-weight:bolder; color:red">"${message.username}" has left</span>`
     newLine()
   })
 
@@ -41,6 +45,10 @@ function App() {
     newLine()
     messagesFeed.current.innerHTML += `<span style="font-weight:bolder; color:green">${message}</span>`
     newLine()
+  })
+
+  socket.on('usersNumber', n_users => {
+    document.getElementById('users-number').innerText = n_users.toString()
   })
 
   const newLine = () => {
@@ -94,6 +102,10 @@ function App() {
           <input ref={userName} type="text" className="input username-input form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"/>
         </div>
         
+        <div className="users-number" style={{color:'white'}}>
+          Online Users : <span id="users-number">0</span> 
+        </div>
+
         <div ref={messagesFeed} className="messages-wrapper"></div>
 
         <div className="input-group">
