@@ -10,8 +10,6 @@ function App() {
   const userMessage = useRef();
   const messagesFeed = useRef();
 
-  var c = 0
-
   const printCommands = () => {
     userMessage.current.placeholder = 
     '/commands => Get a list of all commands\n/clear => Clears all your messages feed\n'
@@ -40,8 +38,6 @@ function App() {
   })
 
   socket.on('newUser', (message) => {
-    if (c === 0) return
-    c++
     newLine()
     messagesFeed.current.innerHTML += `<span style="font-weight:bolder; color:green">${message}</span>`
     newLine()
