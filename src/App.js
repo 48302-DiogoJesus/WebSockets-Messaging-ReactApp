@@ -2,11 +2,7 @@ import './App.css';
 import { io } from 'socket.io-client';
 import React, { useState, useRef } from 'react';
 
-// UNCOMMENT
-// const socket = io(`https://codeshare-backendservice.herokuapp.com/`);
-
-// COMMENT
-const socket = io(`http://localhost:3000`);
+const socket = io(`https://codeshare-backendservice.herokuapp.com/`);
 
 function App() {
 
