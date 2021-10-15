@@ -1,38 +1,74 @@
-.App {
-  text-align: center;
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Display:wght@300&display=swap");
+
+* {
+  font-family: "Noto Sans Display", sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  background-color: #190737;
+  margin: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.input {
+  border-radius: 10px;
+  background-color: #37343d;
+  color: white;
+  margin: 20px 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.input:focus {
+  background-color: #37343d;
+  color: rgb(255, 240, 240);
+}
+
+textarea {
+  margin: 20px 20px;
+  min-height: 100px;
+  max-height: 600px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.send-message {
+  margin: 20px 0;
+  width: 100%;
+  border: 1px solid whitesmoke;
+}
+.send-message:hover {
+  background-color: #190737;
+}
+
+.messages-wrapper {
+  opacity: 0.9;
+  border: 2px solid #00c9a8;
+  background-color: #37343d;
+  font-size: 1.4rem;
+  color: rgb(228, 211, 211);
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+  height: 65vh;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.user-wrapper {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+}
+.username-input {
+  width: 100%;
+}
+
+.username-identifier {
+  font-weight: bolder;
+  font-size: 1.5rem;
+}
+
+pre {
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  border: 0;
 }
