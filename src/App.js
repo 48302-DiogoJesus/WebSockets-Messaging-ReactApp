@@ -4,6 +4,8 @@ import React, { useState, useRef } from 'react';
 
 const socket = io(`https://codeshare-backendservice.herokuapp.com/`);
 
+// const socket = io(`http://localhost:3000/`);
+
 function App() {
 
   const userName = useRef();
@@ -22,13 +24,40 @@ function App() {
   })
 
   // When server sends mesage update messages feed
-  socket.on('message', async (msg) => {
+  socket.on('message', async (message) => {
+    const msgFeed = document.getElementsByClassName('messages-wrapper')[0]
+
     var color = 'green'
-    if (msg.username === userName.current.value) {
+    if (message.username === userName.current.value) {
       color = 'lightblue'
     }
+
+    var newMsgContent = ''
+    var pre = document.createElement('pre')
+    var newMessage = document.createElement('div')
+    let userLabel = document.createElement('span')
+    userLabel.style.fontWeight = 'bolder'
+    userLabel.style.color = color
+    userLabel.innerText = message.username + ' : '
+
+    newMessage.appendChild(userLabel)
+
+    // Customize message words
+    for (let word of message.message.split(' ')) {
+      if (word.includes('http') || word.includes('www.')) {
+        newMsgContent +=  `<a href="${word}" target="_blank" class="url">${word}</a> `
+      } else {
+        newMsgContent += word + ' '
+      } 
+    }
+
+    newMessage.className = 'message-wrapper'
+    newMessage.innerHTML += newMsgContent
+
     newLine()
-    messagesFeed.current.innerHTML += `<pre><span style="font-style: bold; color: ${color}" class="username-identifier">${msg.username}</span>` + ' : ' + msg.message + '</pre>'
+    pre.appendChild(newMessage)
+    msgFeed.appendChild(pre)   
+    msgFeed.scrollTop = msgFeed.scrollHeight
   })
 
   socket.on('userLeft', (message) => {
@@ -40,7 +69,7 @@ function App() {
   socket.on('newUser', (message) => {
     newLine()
     messagesFeed.current.innerHTML += `<span style="font-weight:bolder; color:green">${message}</span>`
-    newLine()
+    newLine();
   })
 
   socket.on('usersNumber', n_users => {
@@ -52,11 +81,13 @@ function App() {
   }
 
   // Send a message to server
-  const sendMessage = () => {
+  const handleMessage = () => {
     if (userMessage.current.value.toString()[0] === '/') {
       handleCommand()
       return
     }
+
+    // Send Normal Message
     if (userName.current.value !== ''){
       let message = userMessage.current.value
       if (message !== '' ) {
@@ -107,7 +138,9 @@ function App() {
         <div className="input-group">
           <textarea onChange={handleKeyDown} ref={userMessage} className="input form-control" aria-label="With textarea" spellCheck="false" placeholder="Type your message here.&#10;Use '/commands' to check the available commands !"></textarea>
         </div>
-        <button onClick={sendMessage} type="button" className="send-message btn btn-dark">Send Message</button>
+        <div className="buttons-wrapper">
+          <button onClick={handleMessage} type="button" className="send-message btn btn-dark">Send Message</button>
+        </div>
       </div>
     </div>
   );
