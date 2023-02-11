@@ -1,2 +1,2 @@
-# Simple Online Chating App using sockets
-https://codeshareroom.herokuapp.com/
+# Simple Online Chating App using web-sockets
+
