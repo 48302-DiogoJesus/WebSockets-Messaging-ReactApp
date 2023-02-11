@@ -2,6 +2,12 @@ import './App.css';
 import { io } from 'socket.io-client';
 import React, { useRef } from 'react';
 
+/**
+* EDIT: 11/02/2023
+* This completely ignores the React Lifecycle by using side-effect (creating event handlers for the web-socket)
+* Code splitting would also help
+*/
+
 // Link to the Socket Server
 const socket = io(`https://codeshare-backendservice.herokuapp.com/`);
 
